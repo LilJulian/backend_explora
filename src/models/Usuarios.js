@@ -1,6 +1,6 @@
 import connection from "../utils/db.js";
 
-class Usuario {
+export class Usuario {
   
   // Método para obtener todas las categorías
   async getAll() {
@@ -11,6 +11,30 @@ class Usuario {
       throw new Error("Error al obtener los usuarios");
     }
   }
+
+  static async findByEmail(correo) {
+    const [rows] = await connection.query("SELECT * FROM usuarios WHERE correo = ?", [
+      correo,
+    ]);
+    return rows[0];
+  }
+
+   static async create(nombre, correo, telefono, hashedPassword) {
+    console.log(nombre, correo, telefono, hashedPassword);
+    const [result] = await connection.query(
+      "INSERT INTO usuarios (nombre, correo, telefono, contrasena, rol) VALUES (?, ?, ?, ?, 2)",
+      [nombre, correo, telefono, hashedPassword]
+    );
+    return result.insertId;
+  }
+
+
+  
+    static async updateRefreshToken(id, refreshToken) {
+    await connection.query("UPDATE usuarios SET refresh_token = ? WHERE id = ?", [
+      refreshToken,
+      id,
+    ]);
+  }
 }
 
-export default Usuario;
