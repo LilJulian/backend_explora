@@ -3,7 +3,7 @@ import connection from "../utils/db.js";
 export class PermisoRol {
   
   // Obtener todos los registros de la relación
-  async getAll() {
+  static async getAll() {
     try {
       const [rows] = await connection.query("SELECT * FROM permisos_roles");
       return rows;

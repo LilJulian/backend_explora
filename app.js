@@ -3,9 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-import authRoutes from "./src/routes/authRoutes.js";
-import protectedRoutes from "./src/routes/protectedRoutes.js";
-import roles from './src/routes/rolRoutes.js';
+import rutas from './src/routes/index.js';
 
 dotenv.config();
 
@@ -23,9 +21,9 @@ app.use(cookieParser());
 
 // Rutas
 
-app.use("/api/auth", authRoutes);
-app.use("/api/protected", protectedRoutes);
-app.use("/api/roles", roles )
+rutas.forEach(({ path, router }) => { // Itera sobre las rutas definidas
+  app.use('/api' + path, router); // Asocia cada ruta con su respectivo router
+});
 
 // Iniciar servidor
 app.listen(PORT, () => {

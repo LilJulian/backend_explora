@@ -1,10 +1,10 @@
 import {ResponseProvider} from "../providers/ResponseProvider.js";
-import RolService from "../services/rolService.js";
+import PermisoService from "../services/permisoService.js";
 
-class RolController {
-  static getAllRoles = async (req, res) => {
+class PermisoController {
+  static getAll = async (req, res) => {
     try {
-      const response = await RolService.getAll();
+      const response = await PermisoService.getAll();
       if (response.error) {
         return ResponseProvider.error(res, response.message, response.code);
       }
@@ -14,10 +14,10 @@ class RolController {
     }
   };
 
-  static getRolById = async (req, res) => {
+  static getById = async (req, res) => {
     try {
       const { id } = req.params;
-      const response = await RolService.getById(id);
+      const response = await PermisoService.getById(id);
       if (response.error) {
         return ResponseProvider.error(res, response.message, response.code);
       }
@@ -27,10 +27,10 @@ class RolController {
     }
   };
 
-  static createRol = async (req, res) => {
+  static create = async (req, res) => {
     try {
-      const { nombre } = req.body;
-      const response = await RolService.create(nombre);
+      const { nombre, descripcion } = req.body;
+      const response = await PermisoService.create(nombre, descripcion);
       if (response.error) {
         return ResponseProvider.error(res, response.message, response.code);
       }
@@ -40,11 +40,11 @@ class RolController {
     }
   };
 
-  static updateRol = async (req, res) => {
+  static update = async (req, res) => {
     try {
       const { id } = req.params;
-      const { nombre } = req.body;
-      const response = await RolService.update(id, nombre);
+      const { nombre, descripcion } = req.body;
+      const response = await PermisoService.update(id, nombre, descripcion);
       if (response.error) {
         return ResponseProvider.error(res, response.message, response.code);
       }
@@ -54,10 +54,10 @@ class RolController {
     }
   };
 
-  static deleteRol = async (req, res) => {
+  static delete = async (req, res) => {
     try {
       const { id } = req.params;
-      const response = await RolService.delete(id);
+      const response = await PermisoService.delete(id);
       if (response.error) {
         return ResponseProvider.error(res, response.message, response.code);
       }
@@ -68,4 +68,4 @@ class RolController {
   };
 }
 
-export default RolController;
+export default PermisoController;
