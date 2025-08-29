@@ -31,6 +31,15 @@ class ResponseProvider {
       erros: erros
     });
   }
+
+    static authError(res, message = "Error de autenticación de token", status = 401, authError) {
+    return res.status(status).json({
+      success: false,               // Indica que la operación falló
+      code: status,                 // Código de estado HTTP para referencia
+      message,                      // Mensaje descriptivo del error de token
+      authError                    // Detalle específico del error de token (opcional)
+    });
+  }
 }
 
 export default ResponseProvider

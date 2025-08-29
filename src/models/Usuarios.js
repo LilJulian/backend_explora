@@ -1,6 +1,6 @@
 import connection from "../utils/db.js";
 
-export class Usuario {
+class Usuario {
   
   // Método para obtener todas las categorías
   static async getAll() {
@@ -36,13 +36,6 @@ export class Usuario {
   }
 
 
-  
-     static async updateRefreshToken(id, refreshToken) {
-    await connection.query("UPDATE usuarios SET refresh_token = ? WHERE id = ?", [
-      refreshToken,
-      id,
-    ]);
-  }
 }
 
 export default Usuario;

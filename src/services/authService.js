@@ -1,7 +1,7 @@
 // Importa librerías necesarias para autenticación y encriptación
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import bcrypt from "bcrypt";
+
 
 // Importa modelos y servicios relacionados con usuarios, roles y permisos
 import Usuario from "../models/Usuarios.js";

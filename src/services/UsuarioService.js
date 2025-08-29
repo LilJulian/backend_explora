@@ -6,20 +6,19 @@ const saltRounds = 10;
 
 class UsuarioService {
   static objUsuario = new Usuario();
-  static objRol = new Rol();
 
   // Obtener todos los usuarios
   static async getAllUsuarios() {
     try {
-      const usuarios = await this.objUsuario.getAll();
+      const usuarios = await Usuario.getAll();
 
       if (!usuarios || usuarios.length === 0) {
         return { error: true, code: 404, message: "No hay usuarios registrados" };
       }
 
-      // Configurar cada usuario con su rol
+    //   Configurar cada usuario con su rol
       const usuariosConRol = await Promise.all(
-        usuarios.map(async (usuario) => await this.#configurarUsuario(usuario))
+        usuarios.map(async (usuario) => await usuario)
       );
 
       return {
@@ -37,7 +36,7 @@ class UsuarioService {
   // Obtener un usuario por ID
   static async getUsuarioById(id) {
     try {
-      const usuario = await this.objUsuario.getById(id);
+      const usuario = await Usuario.getById(id);
       if (!usuario) {
         return { error: true, code: 404, message: "Usuario no encontrado" };
       }
@@ -46,7 +45,7 @@ class UsuarioService {
         error: false,
         code: 200,
         message: "Usuario obtenido correctamente",
-        data: await this.#configurarUsuario(usuario),
+        data: await usuario
       };
     } catch (error) {
       return { error: true, code: 500, message: error.message };
@@ -57,7 +56,7 @@ class UsuarioService {
   static async createUsuario(usuario) {
     try {
       // Validar correo único
-      if (await this.objUsuario.getByCorreo(usuario.correo)) {
+      if (await Usuario.getByCorreo(usuario.correo)) {
         return { error: true, code: 409, message: "El correo ya está registrado." };
       }
 
@@ -86,7 +85,7 @@ class UsuarioService {
   // Actualizar usuario
   static async updateUsuario(id, usuario) {
     try {
-      const existente = await this.objUsuario.getById(id);
+      const existente = await Usuario.getById(id);
       if (!existente) {
         return { error: true, code: 404, message: "Usuario no encontrado" };
       }
@@ -99,7 +98,7 @@ class UsuarioService {
         };
       }
 
-      const usuarioActualizado = await this.objUsuario.update(id, usuario);
+      const usuarioActualizado = await Usuario.update(id, usuario);
 
       if (!usuarioActualizado) {
         return { error: true, code: 400, message: "Error al actualizar el usuario" };
@@ -109,7 +108,7 @@ class UsuarioService {
         error: false,
         code: 200,
         message: "Usuario actualizado correctamente",
-        data: await this.#configurarUsuario(usuarioActualizado),
+        data: await usuarioActualizado
       };
     } catch (error) {
       return { error: true, code: 500, message: error.message };
@@ -119,12 +118,12 @@ class UsuarioService {
   // Eliminar usuario
   static async deleteUsuario(id) {
     try {
-      const usuario = await this.objUsuario.getById(id);
+      const usuario = await Usuario.getById(id);
       if (!usuario) {
         return { error: true, code: 404, message: "Usuario no encontrado" };
       }
 
-      const eliminado = await this.objUsuario.delete(id);
+      const eliminado = await Usuario.delete(id);
       if (!eliminado) {
         return { error: true, code: 400, message: "Error al eliminar el usuario" };
       }
@@ -138,7 +137,7 @@ class UsuarioService {
   // Cambiar contraseña
   static async updateContrasena(id, contrasenas) {
     try {
-      const existente = await this.objUsuario.getById(id);
+      const existente = await Usuario.getById(id);
       if (!existente) {
         return { error: true, code: 404, message: "Usuario no encontrado" };
       }
@@ -152,7 +151,7 @@ class UsuarioService {
       }
 
       const nuevaContrasena = await bcrypt.hash(contrasenas.contrasena_nueva, saltRounds);
-      const response = await this.objUsuario.update(id, { contrasena: nuevaContrasena });
+      const response = await Usuario.update(id, { contrasena: nuevaContrasena });
 
       if (!response) {
         return { error: true, code: 400, message: "Error al actualizar la contraseña" };
@@ -169,13 +168,7 @@ class UsuarioService {
   }
 
   // Configuración de usuario (adjuntar rol y quitar contraseña)
-  static async #configurarUsuario(usuario) {
-    const rol = await this.objRol.getById(usuario.rol);
-    usuario.rol = rol || null;
 
-    delete usuario.contrasena;
-    return usuario;
-  }
 }
 
 export default UsuarioService;

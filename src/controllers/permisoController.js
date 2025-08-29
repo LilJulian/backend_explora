@@ -1,6 +1,7 @@
 import ResponseProvider from "../providers/ResponseProvider.js";
 import PermisoService from "../services/permisoService.js";
 
+
 class PermisoController {
   static getAll = async (req, res) => {
     try {
