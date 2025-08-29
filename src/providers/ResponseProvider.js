@@ -1,4 +1,4 @@
-export class ResponseProvider {
+class ResponseProvider {
   /**
    * 
    * @param {*} res 
@@ -32,3 +32,5 @@ export class ResponseProvider {
     });
   }
 }
+
+export default ResponseProvider

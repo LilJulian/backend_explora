@@ -1,7 +1,7 @@
-import { PermisoRol } from "../models/PermisosRol.js";
+import  PermisoRol  from "../models/PermisosRol.js";
 
 class PermisoRolService {
-  static async getAll() {
+   static async getAll() {
     try {
       const permisos_rol = await PermisoRol.getAll();
       return { error: false, code: 200, data: permisos_rol };
@@ -10,7 +10,7 @@ class PermisoRolService {
     }
   }
 
-  static async getById(id) {
+   static async getById(id) {
     try {
       const permisos_rol = await PermisoRol.findById(id);
       if (!permisos_rol) return { error: true, code: 404, message: "Permiso y rol no encontrado" };
@@ -20,7 +20,7 @@ class PermisoRolService {
     }
   }
 
-  static async create(nombre) {
+   static async create(nombre) {
     try {
       const id = await PermisoRol.create(nombre);
       return { error: false, code: 201, message: "Permiso y rol creado", id };
@@ -29,7 +29,7 @@ class PermisoRolService {
     }
   }
 
-  static async update(id, nombre) {
+   static async update(id, nombre) {
     try {
       const updated = await PermisoRol.update(id, nombre);
       if (!updated) return { error: true, code: 404, message: "Permiso y rol no encontrado" };
@@ -39,7 +39,7 @@ class PermisoRolService {
     }
   }
 
-  static async delete(id) {
+   static async delete(id) {
     try {
       const deleted = await PermisoRol.delete(id);
       if (!deleted) return { error: true, code: 404, message: "Permiso y rol no encontrado" };

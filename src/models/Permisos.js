@@ -1,9 +1,9 @@
 import connection from "../utils/db.js";
 
-export class Permiso {
+ class Permiso {
   
   // Obtener todos los permisos
-  async getAll() {
+  static async getAll() {
     try {
       const [rows] = await connection.query("SELECT * FROM permisos");
       return rows;
@@ -13,7 +13,7 @@ export class Permiso {
   }
 
   // Buscar permiso por ID
-  static async findById(id) {
+   static async findById(id) {
     const [rows] = await connection.query("SELECT * FROM permisos WHERE id = ?", [
       id,
     ]);
@@ -21,7 +21,7 @@ export class Permiso {
   }
 
   // Buscar permiso por nombre
-  static async findByName(nombre) {
+   static async findByName(nombre) {
     const [rows] = await connection.query("SELECT * FROM permisos WHERE nombre = ?", [
       nombre,
     ]);
@@ -29,7 +29,7 @@ export class Permiso {
   }
 
   // Crear nuevo permiso
-  static async create(nombre, descripcion) {
+   static async create(nombre, descripcion) {
     const [result] = await connection.query(
       "INSERT INTO permisos (nombre, descripcion) VALUES (?, ?)",
       [nombre, descripcion]
@@ -38,7 +38,7 @@ export class Permiso {
   }
 
   // Actualizar permiso
-  static async update( nombre, descripcion) {
+   static async update( nombre, descripcion) {
     const [result] = await connection.query(
       "UPDATE permisos SET nombre = ?, descripcion = ? WHERE id = ?",
       [nombre, descripcion]
@@ -47,7 +47,7 @@ export class Permiso {
   }
 
   // Eliminar permiso
-  static async delete(id) {
+   static async delete(id) {
     const [result] = await connection.query(
       "DELETE FROM permisos WHERE id = ?",
       [id]
@@ -55,3 +55,5 @@ export class Permiso {
     return result.affectedRows;
   }
 }
+
+export default Permiso;

@@ -1,9 +1,9 @@
-import { Permiso } from "../models/Permisos.js";
+import  Permiso  from "../models/Permisos.js";
 
 class PermisoService {
   static async getAll() {
     try {
-      const permisos = await new Permiso().getAll();
+      const permisos = await Permiso.getAll();
       return { error: false, code: 200, data: permisos };
     } catch (error) {
       console.error(error);

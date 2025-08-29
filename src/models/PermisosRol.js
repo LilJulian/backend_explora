@@ -1,9 +1,9 @@
 import connection from "../utils/db.js";
 
-export class PermisoRol {
+ class PermisoRol {
   
   // Obtener todos los registros de la relación
-  static async getAll() {
+   static async getAll() {
     try {
       const [rows] = await connection.query("SELECT * FROM permisos_roles");
       return rows;
@@ -13,7 +13,7 @@ export class PermisoRol {
   }
 
   // Buscar relación por ID
-  static async findById(id) {
+   static async findById(id) {
     const [rows] = await connection.query(
       "SELECT * FROM permisos_roles WHERE id = ?",
       [id]
@@ -22,20 +22,16 @@ export class PermisoRol {
   }
 
   // Buscar todas las relaciones de un rol
-  static async findByRol(idRol) {
+   static async findByRol(idRol) {
     const [rows] = await connection.query(
-      `SELECT pr.*, p.nombre as permiso, r.nombre as rol
-       FROM permisos_roles pr
-       INNER JOIN permisos p ON pr.id = p.id
-       INNER JOIN roles r ON pr.id_rol = r.id
-       WHERE pr.id_rol = ?`,
+      `SELECT * FROM permisos_roles where id_rol = ?`,
       [idRol]
     );
     return rows;
   }
 
   // Crear nueva relación (rol ↔ permiso)
-  static async create(idRol, idPermiso) {
+   static async create(idRol, idPermiso) {
     const [result] = await connection.query(
       "INSERT INTO permisos_roles (id_rol, id_permiso) VALUES (?, ?)",
       [idRol, idPermiso]
@@ -44,7 +40,7 @@ export class PermisoRol {
   }
 
   // Actualizar relación
-  static async update(id, idRol, idPermiso) {
+   static async update(id, idRol, idPermiso) {
     const [result] = await connection.query(
       "UPDATE permisos_roles SET id_rol = ?, id_permiso = ? WHERE id = ?",
       [idRol, idPermiso, id]
@@ -53,7 +49,7 @@ export class PermisoRol {
   }
 
   // Eliminar relación
-  static async delete(id) {
+   static async delete(id) {
     const [result] = await connection.query(
       "DELETE FROM permisos_roles WHERE id = ?",
       [id]
@@ -61,3 +57,5 @@ export class PermisoRol {
     return result.affectedRows;
   }
 }
+
+export default PermisoRol;

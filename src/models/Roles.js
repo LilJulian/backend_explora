@@ -1,9 +1,9 @@
 import connection from "../utils/db.js";
 
-export class Rol {
+ class Rol {
   
   // Obtener todos los roles
-  async getAll() {
+  static async getAll() {
     try {
       const [rows] = await connection.query("SELECT * FROM roles");
       return rows;
@@ -13,7 +13,7 @@ export class Rol {
   }
 
   // Buscar rol por ID
-  static async findById(id) {
+   static async findById(id) {
     const [rows] = await connection.query("SELECT * FROM roles WHERE id = ?", [
       id,
     ]);
@@ -21,7 +21,7 @@ export class Rol {
   }
 
   // Buscar rol por nombre
-  static async findByName(nombre) {
+   static async findByName(nombre) {
     const [rows] = await connection.query("SELECT * FROM roles WHERE nombre = ?", [
       nombre,
     ]);
@@ -29,7 +29,7 @@ export class Rol {
   }
 
   // Crear nuevo rol
-  static async create(nombre) {
+   static async create(nombre) {
     const [result] = await connection.query(
       "INSERT INTO roles (nombre) VALUES (?)",
       [nombre]
@@ -38,7 +38,7 @@ export class Rol {
   }
 
   // Actualizar rol
-  static async update(id, nombre) {
+   static async update(id, nombre) {
     const [result] = await connection.query(
       "UPDATE roles SET nombre = ? WHERE id = ?",
       [nombre, id]
@@ -47,7 +47,7 @@ export class Rol {
   }
 
   // Eliminar rol
-  static async delete(id) {
+   static async delete(id) {
     const [result] = await connection.query(
       "DELETE FROM roles WHERE id = ?",
       [id]
@@ -55,3 +55,5 @@ export class Rol {
     return result.affectedRows;
   }
 }
+
+export default Rol;

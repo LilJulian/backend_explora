@@ -1,16 +1,16 @@
-import { Rol } from "../models/roles.js";
+import  Rol  from "../models/roles.js";
 
 class RolService {
-  static async getAll() {
+   static async getAll() {
     try {
-      const roles = await new Rol().getAll();
+      const roles = await Rol.getAll();
       return { error: false, code: 200, data: roles };
     } catch (error) {
       return { error: true, code: 500, message: "Error al obtener roles" };
     }
   }
 
-  static async getById(id) {
+   static async getById(id) {
     try {
       const rol = await Rol.findById(id);
       if (!rol) return { error: true, code: 404, message: "Rol no encontrado" };
@@ -20,7 +20,7 @@ class RolService {
     }
   }
 
-  static async create(nombre) {
+   static async create(nombre) {
     try {
       const id = await Rol.create(nombre);
       return { error: false, code: 201, message: "Rol creado", id };
@@ -29,7 +29,7 @@ class RolService {
     }
   }
 
-  static async update(id, nombre) {
+   static async update(id, nombre) {
     try {
       const updated = await Rol.update(id, nombre);
       if (!updated) return { error: true, code: 404, message: "Rol no encontrado" };
@@ -39,7 +39,7 @@ class RolService {
     }
   }
 
-  static async delete(id) {
+   static async delete(id) {
     try {
       const deleted = await Rol.delete(id);
       if (!deleted) return { error: true, code: 404, message: "Rol no encontrado" };

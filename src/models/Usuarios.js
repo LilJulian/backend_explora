@@ -3,7 +3,7 @@ import connection from "../utils/db.js";
 export class Usuario {
   
   // Método para obtener todas las categorías
-  async getAll() {
+  static async getAll() {
     try {
       const [rows] = await connection.query("SELECT * FROM usuarios");
       return rows; // Retorna las categorías obtenidas
@@ -12,14 +12,21 @@ export class Usuario {
     }
   }
 
-  static async findByEmail(correo) {
+   static async findByEmail(correo) {
     const [rows] = await connection.query("SELECT * FROM usuarios WHERE correo = ?", [
       correo,
     ]);
     return rows[0];
   }
 
-   static async create(nombre, correo, telefono, hashedPassword) {
+     static async getById(id) {
+    const [rows] = await connection.query("SELECT * FROM usuarios WHERE id = ?", [
+      id,
+    ]);
+    return rows[0];
+  }
+
+    static async create(nombre, correo, telefono, hashedPassword) {
     console.log(nombre, correo, telefono, hashedPassword);
     const [result] = await connection.query(
       "INSERT INTO usuarios (nombre, correo, telefono, contrasena, rol) VALUES (?, ?, ?, ?, 2)",
@@ -30,11 +37,13 @@ export class Usuario {
 
 
   
-    static async updateRefreshToken(id, refreshToken) {
+     static async updateRefreshToken(id, refreshToken) {
     await connection.query("UPDATE usuarios SET refresh_token = ? WHERE id = ?", [
       refreshToken,
       id,
     ]);
   }
 }
+
+export default Usuario;
 
